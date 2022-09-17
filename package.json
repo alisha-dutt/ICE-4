@@ -1,0 +1,15 @@
+{
+  "name": "comp2112-week2",
+  "version": "1.0.0",
+  "description": "Demp app for week 2",
+  "main": "index.js",
+  "repository": "https://github.com/alisha-dutt/COMP2122-week2.git",
+  "author": "alisha-dutt <200490302@student.georgianc.on.ca>",
+  "license": "MIT",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.0",
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.1",
+    "jquery": "^3.6.1"
+  }
+}
