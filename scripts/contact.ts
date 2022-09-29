@@ -65,5 +65,27 @@ class Contact
         outputString +=`Email Address: ${this.EmailAddress}\n`;
         return outputString;
     }
+    /**
+     *this method convetrs class data members to a coma-seperated list compatible with JSON
+     *
+     * @return {*}  {string}
+     * @memberof Contact
+     */
+    public toJSON():string
+    {
+        return `{${this.FullName}, ${this.ContactNumber}, ${this.EmailAddress}}`;
+    }
+    /**
+     * This method reads data from a coma-seperated list and assigns it to the class DATA members
+     *
+     * @param {*} data
+     * @memberof Contact
+     */
+    public fromJSON(data:any):void
+    {
+        this.FullName =data.FullName;
+        this.ContactNumber =data.ContactNumber;
+        this.EmailAddress=data.EmailAddress;
+    }
     // private methods
 }

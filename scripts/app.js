@@ -23,10 +23,16 @@
         console.log("App started");
         $.getJSON("./Data/contacts.json", function (DataSource) {
             // Get data from dataScouce
-            console.log(DataSource.ContactList);
+            let contactList;
+            // console.log(DataSource.ContactList);
+            contactList = DataSource.ContactList;
             // load data into objects
-            let contact = new Contact();
-            console.log(contact.toString());
+            // let contact = new Contact();
+            // console.log(contact.toString());
+            for (const contact of contactList) {
+                let newContact = new Contact(contact.FullName, contact.ContactNumber, contact.EmailAddress);
+                console.log(newContact.toString());
+            }
         });
     }
     window.addEventListener("load", Start);
