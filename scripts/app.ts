@@ -25,7 +25,8 @@
         console.log("App started");
         $.getJSON("./Data/contacts.json",function(DataSource){
             console.log(DataSource.ContactList);
-        })
-    }
+        });
+         localStorage.setItem ("0", "Alisha Dutt");
+    } 
     window.addEventListener("load", Start);
 })();
