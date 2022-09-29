@@ -22,9 +22,12 @@
     function Start() {
         console.log("App started");
         $.getJSON("./Data/contacts.json", function (DataSource) {
+            // Get data from dataScouce
             console.log(DataSource.ContactList);
+            // load data into objects
+            let contact = new Contact();
+            console.log(contact.toString());
         });
-        localStorage.setItem("0", "Alisha Dutt");
     }
     window.addEventListener("load", Start);
 })();
