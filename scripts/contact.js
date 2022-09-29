@@ -56,7 +56,7 @@ class Contact {
      * @memberof Contact
      */
     toJSON() {
-        return `{${this.FullName}, ${this.ContactNumber}, ${this.EmailAddress}}`;
+        return `{${this.FullName},${this.ContactNumber},${this.EmailAddress}}`;
     }
     /**
      * This method reads data from a coma-seperated list and assigns it to the class DATA members
@@ -65,9 +65,10 @@ class Contact {
      * @memberof Contact
      */
     fromJSON(data) {
-        this.FullName = data.FullName;
-        this.ContactNumber = data.ContactNumber;
-        this.EmailAddress = data.EmailAddress;
+        let stringArray = data.split(",");
+        this.FullName = stringArray[0];
+        this.ContactNumber = stringArray[1];
+        this.EmailAddress = stringArray[2];
     }
 }
 //# sourceMappingURL=contact.js.map
