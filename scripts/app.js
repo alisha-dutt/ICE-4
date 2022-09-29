@@ -19,30 +19,52 @@
             }
         });
     }
+    /**
+     * this method saves our data to localStorge
+     *
+     * @param {any[]} contactList
+     */
+    function SaveContactListData(contactList) {
+        let count = 0;
+        for (const contact of contactList) {
+            let newContact = new Contact(contact.FullName, contact.ContactNumber, contact.EmailAddress);
+            //  console.log(newContact.toString());
+            localStorage.setItem(count.toString(), newContact.toJSON());
+            count++;
+        }
+    }
+    /**
+     * this method reads our data from the localStorage and returns a contact Array
+     *
+     * @return {*}  {Contact[]}
+     */
+    function LoadCOntactListData() {
+        // create an empty contact array container
+        let ContactArray = new Array();
+        let keys = Object.keys(localStorage);
+        for (let key of keys) {
+            let newContact = new Contact();
+            console.log(localStorage.getItem(key));
+            newContact.fromJSON(localStorage.getItem(key));
+            console.log(newContact.toString());
+            ContactArray.push(newContact);
+        }
+        return ContactArray;
+    }
     function Start() {
         console.log("App started");
         $.getJSON("./Data/contacts.json", function (DataSource) {
             // Get data from dataScouce
-            let contactList;
             // console.log(DataSource.ContactList);
-            contactList = DataSource.ContactList;
+            let contactList = DataSource.ContactList;
+            SaveContactListData(contactList);
+            let ContactArray = LoadCOntactListData();
+            for (const contact of ContactArray) {
+                console.log(contact.toString());
+            }
             // load data into objects
             // let contact = new Contact();
-            // console.log(contact.toString());
-            let count = 0;
-            for (const contact of contactList) {
-                let newContact = new Contact(contact.FullName, contact.ContactNumber, contact.EmailAddress);
-                //  console.log(newContact.toString());
-                localStorage.setItem(count.toString(), newContact.toJSON());
-                count++;
-            }
-            let keys = Object.keys(localStorage);
-            for (let key of keys) {
-                let newContact = new Contact();
-                console.log(localStorage.getItem(key));
-                newContact.fromJSON(localStorage.getItem(key));
-                console.log(newContact.toString());
-            }
+            // console.log(contact.toString());                      
         });
     }
     window.addEventListener("load", Start);
