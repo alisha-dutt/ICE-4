@@ -51,21 +51,39 @@
         }
         return ContactArray;
     }
+    function LoadHeader() {
+        $.get("./Views/components/header.html", function (html_data) {
+            // console.log(html_data);
+            $("header").html(html_data);
+            switch (document.title) {
+                case "Home":
+                    $("#homePage").addClass("active");
+                    break;
+                case "About Us":
+                    $("#aboutPage").addClass("active");
+                    break;
+                case "Our Projects":
+                    $("#projectsPage").addClass("active");
+                    break;
+                case "Our Services":
+                    $("#servicesPage").addClass("active");
+                    break;
+                case "Contact us":
+                    $("#contactPage").addClass("active");
+                    break;
+            }
+        });
+    }
+    function LoadFooter() {
+        $.get("./Views/components/footer.html", function (html_data) {
+            // console.log(html_data);
+            $("footer").html(html_data);
+        });
+    }
     function Start() {
         console.log("App started");
-        $.getJSON("./Data/contacts.json", function (DataSource) {
-            // Get data from dataScouce
-            // console.log(DataSource.ContactList);
-            let contactList = DataSource.ContactList;
-            SaveContactListData(contactList);
-            let ContactArray = LoadCOntactListData();
-            for (const contact of ContactArray) {
-                console.log(contact.toString());
-            }
-            // load data into objects
-            // let contact = new Contact();
-            // console.log(contact.toString());                      
-        });
+        LoadHeader();
+        LoadFooter();
     }
     window.addEventListener("load", Start);
 })();

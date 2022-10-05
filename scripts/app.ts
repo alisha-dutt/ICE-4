@@ -1,8 +1,7 @@
 "use strict";
 // IFFE -- Immediately invoked function expression
 // self executing function
-(function()
-{
+(function () {
     /**
      * This function loads data asynchrounously from a URL.
      *It calls the callback function when the data loading is complete
@@ -10,13 +9,12 @@
      * @param {string} url
      * @param {function} callback
      */
-    function LoadData(method:string,url:string,callback:Function):void{
+    function LoadData(method: string, url: string, callback: Function): void {
         let XHR = new XMLHttpRequest();
-        XHR.open(method,url);
+        XHR.open(method, url);
         XHR.send();
-        XHR.addEventListener("readystatechange", function(){
-            if((XHR.status ==200)&&(XHR.readyState ==4))
-            {
+        XHR.addEventListener("readystatechange", function () {
+            if ((XHR.status == 200) && (XHR.readyState == 4)) {
                 callback(XHR.responseText);
             }
         });
@@ -26,52 +24,69 @@
      *
      * @param {any[]} contactList
      */
-    function SaveContactListData(contactList:any[]):void
-    {
-        let count =0;
-            for (const contact of contactList) 
-            {
-             let newContact = new Contact(contact.FullName, contact.ContactNumber,contact.EmailAddress);   
+    function SaveContactListData(contactList: any[]): void {
+        let count = 0;
+        for (const contact of contactList) {
+            let newContact = new Contact(contact.FullName, contact.ContactNumber, contact.EmailAddress);
             //  console.log(newContact.toString());
             localStorage.setItem(count.toString(), newContact.toJSON());
             count++;
-            }
+        }
     }
     /**
      * this method reads our data from the localStorage and returns a contact Array
      *
      * @return {*}  {Contact[]}
      */
-    function LoadCOntactListData():Contact[]
-    {
+    function LoadCOntactListData(): Contact[] {
         // create an empty contact array container
         let ContactArray = new Array<Contact>();
         let keys = Object.keys(localStorage);
-        for(let key of keys){
-            let newContact= new Contact();
-           console.log(localStorage.getItem(key));
-           newContact.fromJSON(localStorage.getItem(key));
-           console.log(newContact.toString());
-           ContactArray.push(newContact);
-        } 
+        for (let key of keys) {
+            let newContact = new Contact();
+            console.log(localStorage.getItem(key));
+            newContact.fromJSON(localStorage.getItem(key));
+            console.log(newContact.toString());
+            ContactArray.push(newContact);
+        }
         return ContactArray;
     }
-    function Start(){
-        console.log("App started");        
-        $.getJSON("./Data/contacts.json",function(DataSource){
-            // Get data from dataScouce
-            // console.log(DataSource.ContactList);
-            let contactList:any[]= DataSource.ContactList;
-              SaveContactListData(contactList);
-              let ContactArray =LoadCOntactListData();
-              for (const contact of ContactArray) {
-                console.log(contact.toString());
-              }
-            // load data into objects
-            // let contact = new Contact();
-            // console.log(contact.toString());                      
+
+    function LoadHeader(): void {
+        $.get("./Views/components/header.html", function (html_data) {
+            // console.log(html_data);
+            $("header").html(html_data);
+            switch (document.title) {
+                case "Home":
+                    $("#homePage").addClass("active");
+                    break;
+                case "About Us":
+                    $("#aboutPage").addClass("active");
+                    break;
+                case "Our Projects":
+                    $("#projectsPage").addClass("active");
+                    break;
+                case "Our Services":
+                    $("#servicesPage").addClass("active");
+                    break;
+                case "Contact us":
+                    $("#contactPage").addClass("active");
+                    break;
+            }
         });
-        
-    } 
+    }
+
+    function LoadFooter(): void {
+        $.get("./Views/components/footer.html", function (html_data) {
+            // console.log(html_data);
+            $("footer").html(html_data);
+        });
+    }
+
+    function Start() {
+        console.log("App started");
+        LoadHeader();
+        LoadFooter();
+    }
     window.addEventListener("load", Start);
 })();
