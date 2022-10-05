@@ -51,31 +51,57 @@
         }
         return ContactArray;
     }
-
+    
     function LoadHeader(): void {
         $.get("./Views/components/header.html", function (html_data) {
             // console.log(html_data);
             $("header").html(html_data);
-            switch (document.title) {
-                case "Home":
-                    $("#homePage").addClass("active");
-                    break;
-                case "About Us":
-                    $("#aboutPage").addClass("active");
-                    break;
-                case "Our Projects":
-                    $("#projectsPage").addClass("active");
-                    break;
-                case "Our Services":
-                    $("#servicesPage").addClass("active");
-                    break;
-                case "Contact us":
-                    $("#contactPage").addClass("active");
-                    break;
-            }
+            // switch (document.title) {
+            //     case "Home":
+            //         $("#homePage").addClass("active");
+            //         break;
+            //     case "About Us":
+            //         $("#aboutPage").addClass("active");
+            //         break;
+            //     case "Our Projects":
+            //         $("#projectsPage").addClass("active");
+            //         break;
+            //     case "Our Services":
+            //         $("#servicesPage").addClass("active");
+            //         break;
+            //     case "Contact Us":
+            //         $("#contactPage").addClass("active");
+            //         break;
+            // }
+            $("li>a").on("click", function()
+            {
+                let title =$(this).prop("id") as string;
+                document.title = title.substring(0,1).toUpperCase() + title.substring(1);
+                LoadContent();
+            });
+            
         });
     }
-
+    function LoadContent(): void {
+            switch (document.title) 
+            {
+                case "Home":
+                    $.get("./Views/content/home.html", function (html_data){$("main").html(html_data);})
+                    break;
+                case "About":
+                      $.get("./Views/content/about.html", function (html_data){$("main").html(html_data);})
+                    break;
+                case "Projects":
+                      $.get("./Views/content/projects.html", function (html_data){$("main").html(html_data);})
+                    break;
+                case "Services":
+                      $.get("./Views/content/services.html", function (html_data){$("main").html(html_data);})
+                    break;
+                case "Contact":
+                      $.get("./Views/content/contact.html", function (html_data){$("main").html(html_data);})
+                    break;
+            }
+        }
     function LoadFooter(): void {
         $.get("./Views/components/footer.html", function (html_data) {
             // console.log(html_data);
@@ -85,7 +111,9 @@
 
     function Start() {
         console.log("App started");
+        document.title="Home";
         LoadHeader();
+        // LoadContent();
         LoadFooter();
     }
     window.addEventListener("load", Start);
