@@ -51,7 +51,11 @@
         }
         return ContactArray;
     }
+    /**
+     * This method loads the header and page content
+     */
     function LoadHeader() {
+        console.log("Loading Header...");
         $.get("./Views/components/header.html", function (html_data) {
             // console.log(html_data);
             $("header").html(html_data);
@@ -87,11 +91,20 @@
             });
         });
     }
+    /**
+     * this method injects the content based on the title of the page
+     *
+     */
     function LoadContent() {
+        console.log("Loading Content...");
         let contentLink = document.title.toLowerCase();
         $.get("./Views/content/" + contentLink + ".html", function (html_data) { $("main").html(html_data); });
     }
+    /**
+     * this method ad the foooter to each page.
+     */
     function LoadFooter() {
+        console.log("Loading Footer...");
         $.get("./Views/components/footer.html", function (html_data) {
             // console.log(html_data);
             $("footer").html(html_data);
